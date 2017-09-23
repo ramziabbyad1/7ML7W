@@ -1,0 +1,5 @@
+-to remember list
+
+make front-end resposive.
+
+SGA_TARGET, PGA_AGGREGATE_TARGET
