@@ -63,7 +63,7 @@ int main(int argc, const char* argv[])
 	lua_setglobal(L, "midi_send");
 
 	int scripRes = luaL_dofile(L, argv[1]);
-
+	cout << "Result of dofile " << scripRes << endl;
 	lua_close(L);
 	
 	return scripRes;

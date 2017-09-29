@@ -1,0 +1,102 @@
+factor source code: https://github.com/factor/factor
+mailing list: subscribed
+factor handbook: http://docs.factorcode.org/content/article-handbook.html
+
+how to open documentation for a word (http://docs.factorcode.org/content/article-browsing-help.html)
+
+\ sq help
+
+IN: scratchpad \ sq help
+sq ( x -- y )
+Factor documentation > Factor handbook > The language > Numbers > Mathematical functions > Powers and logarithms
+Next: sqrt ( x -- y )
+
+Vocabulary
+math
+
+Inputs and outputs
+x a number
+y a number
+
+Word description
+Multiplies a number by itself.
+
+Definition
+USING: kernel ;
+IN: math
+: sq ( x -- y ) dup * ; inline
+
+to run command-line version do ./factor -run=listener
+
+::::::::::::::::EASY::::::::::::::::::::::;
+
+1) How to calculate 3^2 + 4^2 
+
+IN: scratchpad 3 3 * 4 4 * +
+
+--- Data stack:
+25
+
+2) using USE: math.functions
+IN: scratchpad USE: math.functions
+IN: scratchpad 3 sq 4 sq + sqrt 
+
+--- Data stack:
+5.0
+
+3) given 1 2 on the stack, make it 1 1 2
+IN: scratchpad 1 2 swap dup rot
+
+--- Data stack:
+1
+1
+2
+
+or
+
+IN: scratchpad 1 2 over rot rot
+
+--- Data stack:
+1
+1
+2
+
+4)
+IN: scratchpad USE: ascii
+IN: scratchpad "Ramzi"
+
+--- Data stack:
+"Ramzi"
+IN: scratchpad "Hello," swap append >upper
+
+--- Data stack:
+"HELLO,RAMZI"
+
+::::::::::::::::::::MEDIUM::::::::::::::::
+1) apply reduce to following list with summation
+
+IN: scratchpad { 1 4 17 9 11 } 0 [ + ] reduce .
+42
+
+2) applice reduce to {1 .. 100} with summation
+IN: scratchpad 100 [1,b] 0 [ + ] reduce .
+5050
+
+3) squares of 1, 10 using map
+IN: scratchpad 10 [1,b] [ dup * ] map .
+{ 1 4 9 16 25 36 49 64 81 100 }
+
+:::::::::::::::::::::::HARD::::::::::::::::::
+
+1) split two digit number into digits
+
+IN: scratchpad [ [ 10 /i ] [ 10 mod ] bi ]
+
+2) split arbitrary length number into digits
+
+123 [ number>string [ 1string string>number . ] each ] call
+1
+2
+3
+
+

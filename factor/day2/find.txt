@@ -1,0 +1,13 @@
+1) a third way of setting factor roots
+
+You can add vocabulary roots by calling a word from .factor-rc file. This file is run every time factor starts up (i.e. is invoked from the command line)
+
+within this file you can put
+
+"/home/ramzi/7langs7weeks/factor/day2/factor" add-vocab-root
+
+2) factor scripts can be deployed as a single OS executable.  See (http://docs.factorcode.org/content/article-tools.deploy.html)
+
+using tools.deploy it is possible to programatically build a factor source-tree with a MAIN: hook.
+
+Before deploying, a configuration file must be included to describe dependencies.

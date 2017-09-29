@@ -1,0 +1,501 @@
+defining a word:
+
+IN: scratchpad : add-42 ( x -- y ) 42 + ;
+IN: scratchpad 24 add-42
+
+--- Data stack:
+66
+
+another word:
+
+IN: scratchpad : sum ( seq -- n ) 0 [ + ] reduce ;
+
+IN: scratchpad { 1 3 5 7 9 } sum
+
+--- Data stack:
+25
+
+returning multiple values from a word
+
+IN: scratchpad : first-two ( seq -- a b ) [ first ] [ second ] bi ;
+
+IN: scratchpad { 99 88 77 } first-two . .
+88
+99
+
+getting help:
+
+IN: scratchpad \ at help
+at ( key assoc -- value/f )
+Factor documentation > Factor handbook > The language > Collections > Associative mapping operations > Lookup and querying of assocs
+Prev: key? ( key assoc -- ? )
+Next: ?at ( key assoc -- value/key ? )
+
+Vocabulary
+assocs
+
+Inputs and outputs
+key     an object
+assoc   an assoc
+value/f the value associated to the key, or f if the key is not present in the assoc
+
+Word description
+Looks up the value associated with a key. This word makes no distinction between a missing value and a value set to f; if the difference is important, use at*.
+
+See also
+at*, key?, ?at, of, ?of
+
+Definition
+USING: kernel ;
+IN: assocs
+: at ( key assoc -- value/f ) at* drop ; inline
+
+Documentation for the sequences vocabulary
+
+IN: scratchpad "sequences" about 
+sequences vocabulary
+Factor documentation > Factor handbook > Vocabulary index
+
+Documentation
+Sequence operations
+
+Meta-data
+Tags:    collections
+Authors: Slava Pestov
+
+Words
+
+Tuple classes
+Class                          Superclass Slots
+ assert-sequence                tuple     got expected
+ bounds-error                   tuple     index seq
+ immutable                      tuple     element index sequence
+ iota-tuple                     tuple     n
+ non-negative-integer-expected  tuple     n
+ repetition                     tuple     len elt
+ reversed                       tuple     seq
+ slice                          tuple     from to seq
+ slice-error                    tuple     from to seq reason
+
+Mixin classes
+ immutable-sequence
+ sequence
+ virtual-sequence
+
+Generic words
+Word              Stack effect
+ bounds-check?    ( n seq -- ? )
+ clone-like       ( seq exemplar -- newseq )
+ length           ( seq -- n )
+ lengthen         ( n seq -- )
+ like             ( seq exemplar -- newseq )
+ new-resizable    ( len seq -- newseq )
+ new-sequence     ( len seq -- newseq )
+ nth              ( n seq -- elt )
+ set-length       ( n seq -- )
+ set-nth          ( elt n seq -- )
+ shorten          ( n seq -- )
+ sum              ( seq -- n )
+ sum-lengths      ( seq -- n )
+ virtual-exemplar ( seq -- seq' )
+ virtual@         ( n seq -- n' seq' )
+
+Ordinary words
+Word                           Stack effect
+ 1sequence                     ( obj exemplar -- seq )
+ 2all?                         ( ... seq1 seq2 quot: ( ... elt1 elt2 -- ... ? ) -- ... ? )
+ 2each                         ( ... seq1 seq2 quot: ( ... elt1 elt2 -- ... ) -- ... )
+ 2map                          ( ... seq1 seq2 quot: ( ... elt1 elt2 -- ... newelt ) -- ... newseq )
+ 2map-as                       ( ... seq1 seq2 quot: ( ... elt1 elt2 -- ... newelt ) exemplar -- ... newseq )
+ 2map-reduce                   ( ..a seq1 seq2 map-quot: ( ..a elt1 elt2 -- ..b intermediate ) reduce-quot: ( ..b prev intermediate -- ..a next ) -- ..a result )
+ 2reduce                       ( ... seq1 seq2 identity quot: ( ... prev elt1 elt2 -- ... next ) -- ... result )
+ 2selector                     ( quot -- selector accum1 accum2 )
+ 2sequence                     ( obj1 obj2 exemplar -- seq )
+ 3append                       ( seq1 seq2 seq3 -- newseq )
+ 3append-as                    ( seq1 seq2 seq3 exemplar -- newseq )
+ 3each                         ( ... seq1 seq2 seq3 quot: ( ... elt1 elt2 elt3 -- ... ) -- ... )
+ 3map                          ( ... seq1 seq2 seq3 quot: ( ... elt1 elt2 elt3 -- ... newelt ) -- ... newseq )
+ 3map-as                       ( ... seq1 seq2 seq3 quot: ( ... elt1 elt2 elt3 -- ... newelt ) exemplar -- ... newseq )
+ 3sequence                     ( obj1 obj2 obj3 exemplar -- seq )
+ 4sequence                     ( obj1 obj2 obj3 obj4 exemplar -- seq )
+ <repetition>                  ( len elt -- repetition )
+ <reversed>                    ( seq -- reversed )
+ <slice>                       ( from to seq -- slice )
+ ?first                        ( seq -- elt/f )
+ ?last                         ( seq -- elt/f )
+ ?nth                          ( n seq -- elt/f )
+ ?second                       ( seq -- elt/f )
+ ?set-nth                      ( elt n seq -- )
+ accumulate                    ( ... seq identity quot: ( ... prev elt -- ... next ) -- ... final newseq )
+ accumulate!                   ( ... seq identity quot: ( ... prev elt -- ... next ) -- ... final seq )
+ accumulate-as                 ( ... seq identity quot: ( ... prev elt -- ... next ) exemplar -- ... final newseq )
+ all?                          ( ... seq quot: ( ... elt -- ... ? ) -- ... ? )
+ any?                          ( ... seq quot: ( ... elt -- ... ? ) -- ... ? )
+ append                        ( seq1 seq2 -- newseq )
+ append!                       ( seq1 seq2 -- seq1 )
+ append-as                     ( seq1 seq2 exemplar -- newseq )
+ assert-sequence               ( got expected -- * )
+ assert-sequence=              ( a b -- )
+ binary-reduce                 ( seq start quot: ( elt1 elt2 -- newelt ) -- value )
+ bounds-check                  ( n seq -- n seq )
+ bounds-error                  ( index seq -- * )
+ but-last                      ( seq -- headseq )
+ but-last-slice                ( seq -- slice )
+ cartesian-each                ( ... seq1 seq2 quot: ( ... elt1 elt2 -- ... ) -- ... )
+ cartesian-map                 ( ... seq1 seq2 quot: ( ... elt1 elt2 -- ... newelt ) -- ... newseq )
+ cartesian-product             ( seq1 seq2 -- newseq )
+ change-nth                    ( ..a i seq quot: ( ..a elt -- ..b newelt ) -- ..b )
+ check-slice                   ( from to seq -- from to seq )
+ check-slice-error             ( from to seq ? string -- from to seq )
+ collapse-slice                ( m n slice -- m' n' seq )
+ collector                     ( quot -- quot' vec )
+ collector-for                 ( quot exemplar -- quot' vec )
+ concat                        ( seq -- newseq )
+ concat-as                     ( seq exemplar -- newseq )
+ copy                          ( src i dst -- )
+ count                         ( ... seq quot: ( ... elt -- ... ? ) -- ... n )
+ cut                           ( seq n -- before after )
+ cut*                          ( seq n -- before after )
+ cut-slice                     ( seq n -- before-slice after-slice )
+ delete-all                    ( seq -- )
+ delete-slice                  ( from to seq -- )
+ drop-prefix                   ( seq1 seq2 -- slice1 slice2 )
+ each                          ( ... seq quot: ( ... x -- ... ) -- ... )
+ each-from                     ( ... seq quot: ( ... x -- ... ) i -- ... )
+ each-index                    ( ... seq quot: ( ... elt index -- ... ) -- ... )
+ empty?                        ( seq -- ? )
+ exchange                      ( m n seq -- )
+ filter                        ( ... seq quot: ( ... elt -- ... ? ) -- ... subseq )
+ filter!                       ( ... seq quot: ( ... elt -- ... ? ) -- ... seq )
+ filter-as                     ( ... seq quot: ( ... elt -- ... ? ) exemplar -- ... subseq )
+ find                          ( ... seq quot: ( ... elt -- ... ? ) -- ... i elt )
+ find-from                     ( ... n seq quot: ( ... elt -- ... ? ) -- ... i elt )
+ find-index                    ( ... seq quot: ( ... elt i -- ... ? ) -- ... i elt )
+ find-index-from               ( ... n seq quot: ( ... elt i -- ... ? ) -- ... i elt )
+ find-last                     ( ... seq quot: ( ... elt -- ... ? ) -- ... i elt )
+ find-last-from                ( ... n seq quot: ( ... elt -- ... ? ) -- ... i elt )
+ first                         ( seq -- first )
+ first2                        ( seq -- first second )
+ first3                        ( seq -- first second third )
+ first4                        ( seq -- first second third fourth )
+ flip                          ( matrix -- newmatrix )
+ follow                        ( ... obj quot: ( ... prev -- ... result/f ) -- ... seq )
+ fourth                        ( seq -- fourth )
+ glue                          ( seq1 seq2 seq3 -- newseq )
+ halves                        ( seq -- first-slice second-slice )
+ harvest                       ( seq -- newseq )
+ head                          ( seq n -- headseq )
+ head*                         ( seq n -- headseq )
+ head-slice                    ( seq n -- slice )
+ head-slice*                   ( seq n -- slice )
+ head?                         ( seq begin -- ? )
+ if-empty                      ( ..a seq quot1: ( ..a -- ..b ) quot2: ( ..a seq -- ..b ) -- ..b )
+ immutable                     ( element index sequence -- * )
+ index                         ( obj seq -- n )
+ index-from                    ( obj i seq -- n )
+ indices                       ( obj seq -- indices )
+ infimum                       ( seq -- n )
+ infimum-by                    ( ... seq quot: ( ... elt -- ... x ) -- ... elt )
+ insert-nth                    ( elt n seq -- seq' )
+ interleave                    ( ... seq between quot: ( ... elt -- ... ) -- ... )
+ iota                          ( n -- iota )
+ join                          ( seq glue -- newseq )
+ join-as                       ( seq glue exemplar -- newseq )
+ last                          ( seq -- elt )
+ last-index                    ( obj seq -- n )
+ last-index-from               ( obj i seq -- n )
+ longer                        ( seq1 seq2 -- seq )
+ longer?                       ( seq1 seq2 -- ? )
+ longest                       ( seqs -- elt )
+ map                           ( ... seq quot: ( ... elt -- ... newelt ) -- ... newseq )
+ map!                          ( ... seq quot: ( ... elt -- ... newelt ) -- ... seq )
+ map-as                        ( ... seq quot: ( ... elt -- ... newelt ) exemplar -- ... newseq )
+ map-find                      ( ... seq quot: ( ... elt -- ... result/f ) -- ... result elt )
+ map-find-last                 ( ... seq quot: ( ... elt -- ... result/f ) -- ... result elt )
+ map-index                     ( ... seq quot: ( ... elt index -- ... newelt ) -- ... newseq )
+ map-integers                  ( ... len quot: ( ... i -- ... elt ) exemplar -- ... newseq )
+ map-reduce                    ( ..a seq map-quot: ( ..a elt -- ..b intermediate ) reduce-quot: ( ..b prev intermediate -- ..a next ) -- ..a result )
+ map-sum                       ( ... seq quot: ( ... elt -- ... n ) -- ... n )
+ max-length                    ( seq1 seq2 -- n )
+ member-eq?                    ( elt seq -- ? )
+ member?                       ( elt seq -- ? )
+ midpoint@                     ( seq -- n )
+ min-length                    ( seq1 seq2 -- n )
+ mismatch                      ( seq1 seq2 -- i )
+ move                          ( to from seq -- )
+ new-like                      ( len exemplar quot -- seq )
+ non-negative-integer-expected ( n -- * )
+ nths                          ( indices seq -- seq' )
+ pad-head                      ( seq n elt -- padded )
+ pad-tail                      ( seq n elt -- padded )
+ padding                       ( ... seq n elt quot: ( ... seq1 seq2 -- ... newseq ) -- ... newseq )
+ partition                     ( ... seq quot: ( ... elt -- ... ? ) -- ... trueseq falseseq )
+ pop                           ( seq -- elt )
+ pop*                          ( seq -- )
+ prefix                        ( seq elt -- newseq )
+ prepend                       ( seq1 seq2 -- newseq )
+ prepend-as                    ( seq1 seq2 exemplar -- newseq )
+ produce                       ( ..a pred: ( ..a -- ..b ? ) quot: ( ..b -- ..a obj ) -- ..b seq )
+ produce-as                    ( ..a pred: ( ..a -- ..b ? ) quot: ( ..b -- ..a obj ) exemplar -- ..b seq )
+ product                       ( seq -- n )
+ push                          ( elt seq -- )
+ push-all                      ( src dst -- )
+ push-either                   ( ..a elt quot: ( ..a elt -- ..b ? ) accum1 accum2 -- ..b )
+ push-if                       ( ..a elt quot: ( ..a elt -- ..b ? ) accum -- ..b )
+ reduce                        ( ... seq identity quot: ( ... prev elt -- ... next ) -- ... result )
+ reduce-index                  ( ... seq identity quot: ( ... prev elt index -- ... next ) -- ... result )
+ remove                        ( elt seq -- newseq )
+ remove!                       ( elt seq -- seq )
+ remove-eq                     ( elt seq -- newseq )
+ remove-eq!                    ( elt seq -- seq )
+ remove-nth                    ( n seq -- seq' )
+ remove-nth!                   ( n seq -- seq )
+ replace-slice                 ( new from to seq -- seq' )
+ replicate                     ( ... len quot: ( ... -- ... newelt ) -- ... newseq )
+ replicate-as                  ( ... len quot: ( ... -- ... newelt ) exemplar -- ... newseq )
+ rest                          ( seq -- tailseq )
+ rest-slice                    ( seq -- slice )
+ reverse                       ( seq -- newseq )
+ reverse!                      ( seq -- seq )
+ second                        ( seq -- second )
+ selector                      ( quot -- selector accum )
+ selector-for                  ( quot exemplar -- selector accum )
+ sequence-hashcode             ( n seq -- x )
+ sequence=                     ( seq1 seq2 -- ? )
+ set-first                     ( first seq -- )
+ set-fourth                    ( fourth seq -- )
+ set-last                      ( elt seq -- )
+ set-second                    ( second seq -- )
+ set-third                     ( third seq -- )
+ short                         ( seq n -- seq n' )
+ shorter                       ( seq1 seq2 -- seq )
+ shorter?                      ( seq1 seq2 -- ? )
+ shortest                      ( seqs -- elt )
+ sift                          ( seq -- newseq )
+ slice-error                   ( from to seq reason -- * )
+ snip                          ( from to seq -- head tail )
+ snip-slice                    ( from to seq -- head tail )
+ start                         ( subseq seq -- i )
+ start*                        ( subseq seq n -- i )
+ subseq                        ( from to seq -- subseq )
+ subseq?                       ( subseq seq -- ? )
+ suffix                        ( seq elt -- newseq )
+ suffix!                       ( seq elt -- seq )
+ supremum                      ( seq -- n )
+ supremum-by                   ( ... seq quot: ( ... elt -- ... x ) -- ... elt )
+ surround                      ( seq1 seq2 seq3 -- newseq )
+ tail                          ( seq n -- tailseq )
+ tail*                         ( seq n -- tailseq )
+ tail-slice                    ( seq n -- slice )
+ tail-slice*                   ( seq n -- slice )
+ tail?                         ( seq end -- ? )
+ third                         ( seq -- third )
+ trim                          ( ... seq quot: ( ... elt -- ... ? ) -- ... newseq )
+ trim-head                     ( ... seq quot: ( ... elt -- ... ? ) -- ... newseq )
+ trim-head-slice               ( ... seq quot: ( ... elt -- ... ? ) -- ... slice )
+ trim-slice                    ( ... seq quot: ( ... elt -- ... ? ) -- ... slice )
+ trim-tail                     ( ... seq quot: ( ... elt -- ... ? ) -- ... newseq )
+ trim-tail-slice               ( ... seq quot: ( ... elt -- ... ? ) -- ... slice )
+ unclip                        ( seq -- rest first )
+ unclip-last                   ( seq -- butlast last )
+ unclip-last-slice             ( seq -- butlast-slice last )
+ unclip-slice                  ( seq -- rest-slice first )
+ unless-empty                  ( seq quot -- )
+ when-empty                    ( seq quot -- )
+
+Class predicate words
+Word                            Stack effect
+ assert-sequence?               ( object -- ? )
+ bounds-error?                  ( object -- ? )
+ immutable-sequence?            ( object -- ? )
+ immutable?                     ( object -- ? )
+ iota-tuple?                    ( object -- ? )
+ non-negative-integer-expected? ( object -- ? )
+ repetition?                    ( object -- ? )
+ reversed?                      ( object -- ? )
+ sequence?                      ( object -- ? )
+ slice-error?                   ( object -- ? )
+ slice?                         ( object -- ? )
+ virtual-sequence?              ( object -- ? )
+
+Files
+resource:core/sequences/sequences.factor
+resource:core/sequences/sequences-docs.factor
+resource:core/sequences/sequences-tests.factor
+
+Children from resource:basis
+Vocabulary                    Summary
+ sequences.complex            Virtual sequence wrapper to convert real pairs into complex values
+ sequences.complex-components Virtual sequence wrapper to convert complex values into real value pairs
+ sequences.cords              Virtual sequence concatenation
+ sequences.deep               Sequence/tree combinators like deep-map, deep-each, etc
+ sequences.generalizations    sequences.generalizations vocabulary
+ sequences.merged             A virtual sequence which merges (interleaves) other sequences.
+ sequences.parser             sequences.parser vocabulary
+ sequences.product            Cartesian products of sequences
+ sequences.unrolled           Unrolled fixed-length sequence iteration
+ sequences.windowed           sequences.windowed vocabulary
+
+Children from resource:basis
+Vocabulary                    Summary
+ sequences.complex            Virtual sequence wrapper to convert real pairs into complex values
+ sequences.complex-components Virtual sequence wrapper to convert complex values into real value pairs
+ sequences.cords              Virtual sequence concatenation
+ sequences.deep               Sequence/tree combinators like deep-map, deep-each, etc
+ sequences.generalizations    sequences.generalizations vocabulary
+ sequences.merged             A virtual sequence which merges (interleaves) other sequences.
+ sequences.parser             sequences.parser vocabulary
+ sequences.product            Cartesian products of sequences
+ sequences.unrolled           Unrolled fixed-length sequence iteration
+ sequences.windowed           sequences.windowed vocabulary
+
+Children from resource:extra
+Vocabulary           Summary
+ sequences.abbrev    sequences.abbrev vocabulary
+ sequences.extras    sequences.extras vocabulary
+ sequences.inserters Direct the output of map-as, filter-as, etc. combinators into existing growable sequences
+ sequences.modified  sequences.modified vocabulary
+ sequences.n-based   Sequence adaptor to treat a sequence as an n-based assoc
+ sequences.repeating sequences.repeating vocabulary
+ sequences.rotated   Rotated virtual sequences
+ sequences.shifted   Shifted virtual sequences
+ sequences.snipped   Snipped virtual sequences
+ sequences.squish    Sequence flattening with parameterized descent predicate
+ sequences.zipped    Virtual "zip" sequences
+
+Children
+Vocabulary         Summary
+ sequences.private sequences.private vocabulary
+
+
+--Show vocabularies, words, and articles that contain json
+IN: scratchpad "json" apropos
+Search results for “json”
+
+json
+Word                                       Stack effect
+ OBJ-SHUTDOWN-QUOT                         ( -- value )
+ g_io_scheduler_job_send_to_mainloop_async ( ioscheduler_job func user_data notify -- )
+ g_io_scheduler_job_send_to_mainloop       ( ioscheduler_job func user_data notify -- gboolean )
+ gtk_text_view_get_justification           ( text_view -- GtkJustification )
+ gtk_text_view_set_justification           ( text_view justification -- )
+All 20 word results for “json”
+
+json
+Vocabulary    Summary
+ json         JSON reader and writer
+ json.writer  Factor to JSON serializer
+ json.reader  JSON to Factor serializer
+ clutter.json clutter.json vocabulary
+ furnace.json Sending JSON responses to the client
+All 29 vocabulary results for “json”
+
+json
+ Converting objects to summary strings
+ Converting objects to human-readable strings
+
+Get a list of all the default libraries loaded by factor listener
+
+IN: scratchpad interactive-vocabs get [ print ] each
+accessors
+arrays
+assocs
+combinators
+compiler.errors
+compiler.units
+continuations
+debugger
+definitions
+editors
+help
+help.apropos
+help.lint
+help.vocabs
+inspector
+io
+io.files
+io.pathnames
+kernel
+listener
+math
+math.order
+memory
+namespaces
+parser
+prettyprint
+see
+sequences
+slicing
+sorting
+stack-checker
+strings
+syntax
+tools.annotations
+tools.crossref
+tools.deprecation
+tools.destructors
+tools.disassembler
+tools.dispatch
+tools.errors
+tools.memory
+tools.profiler.sampling
+tools.test
+tools.threads
+tools.time
+tools.walker
+vocabs
+vocabs.loader
+vocabs.refresh
+vocabs.hierarchy
+words
+
+Example of loading present vocabular using USE:
+
+IN: scratchpad USE: present
+IN: scratchpad 4.2 present
+
+--- Data stack:
+"4.2"
+
+USE: io
+USE: math.functions
+
+is equivalent to
+
+USING: io math.functions ;
+
+Factor uses "SYMBOL:" to set variable type structures
+
+IN: scratchpad SYMBOL: tax-rate
+IN: scratchpad 0.05 tax-rate set
+IN: scratchpad tax-rate get
+
+--- Data stack:
+0.05
+
+SYMBOL's of boolean and integer types
+
+IN: scratchpad SYMBOL: flag
+IN: scratchpad flag on
+IN: scratchpad flag get .
+t
+IN: scratchpad flag off
+IN: scratchpad flag get .
+f
+IN: scratchpad flag toggle
+IN: scratchpad flag get .
+t
+IN: scratchpad SYMBOL: counter
+IN: scratchpad counter inc
+IN: scratchpad counter get .
+1
+IN: scratchpad counter dec
+IN: scratchpad counter get .
+0
+
+Unit testing output
+
+factor factor/examples/greeter/tests/greeter-tests.factor 
+Unit Test: { { "Hello, Test" } [ "Test" greeting ] }
+
+
