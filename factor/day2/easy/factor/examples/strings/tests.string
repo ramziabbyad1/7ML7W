@@ -1,0 +1,5 @@
+USING: tools.test examples.strings ;
+IN: examples.strings
+
+{ t } [ "racecar" palindrome? ] unit-test
+{ f } [ "racebar" palindrome? ] unit-test

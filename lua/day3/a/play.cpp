@@ -50,7 +50,7 @@ int main(int argc, const char* argv[])
 		midi.closePort();
 	}
 	cout << " Preparing to open port " << (ports-1) << endl;
-	cout << midi.getCurrentApi() << " midi.getCurrentApi()" << endl;
+	//cout << midi.getCurrentApi() << " midi.getCurrentApi()" << endl;
 	midi.openPort(ports - 1);
 	cout << "Opened port " << midi.getPortName(ports - 1 ) << endl;
 	cout << midi.getCurrentApi() << " midi.getCurrentApi()" << endl;
