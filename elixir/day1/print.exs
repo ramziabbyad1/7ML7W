@@ -37,37 +37,17 @@ map=Middle.word_count([:one,:two,:two])
 IO.puts "#{inspect map}"
 
 defmodule TreeRecurse do
+  def print_tree("" <> string, indent), do: IO.puts "#{indent}#{string}"
   def print_tree({leaf}, indent), do: IO.puts "#{indent}#{leaf}"
-
   def print_tree({root,{lone}},indent) do 
     IO.puts "#{indent}#{root}"
-    
-    if is_tuple(lone) do
-      print_tree(lone, indent <> " ")
-    else
-      print_tree({lone}, indent <> " ")
-    end
-  
+    print_tree(lone, indent <> " ")
   end
-
   def print_tree({root,{left,right}},indent) do
-
     IO.puts "#{indent}#{root}"
-    
-    if is_tuple(left) do
-      print_tree(left, indent <> " ")
-    else 
-      print_tree({left}, indent <> " ")
-    end
-
-    if is_tuple(right) do
-      print_tree(right, indent <> " ")
-    else 
-      print_tree({right}, indent <> " ")
-    end
-  
+    print_tree(left, indent <> " ")
+    print_tree(right, indent <> " ")
   end
-
 end
 
 
