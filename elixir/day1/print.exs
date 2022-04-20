@@ -25,37 +25,52 @@ defmodule Middle do
     acc=if acc[head] != nil, do: Map.put(acc, head, acc[head]+1), else: Map.put(acc, head,1)
     word_count(tail,acc)
   end
-  def word_count([head|tail]) do#why broken? recurse/call semantics
-    map=%{}
-    map =Map.put(map,head,1)
-    for k <- tail do
-      if map[k] != nil do
-        map=Map.put(map, k, map[k]+1)
-      else
-        map=Map.put(map,k,1)
-      end
-    end
-    map
+  def word_count(list) do#why broken? recurse/call semantics
+    word_count(list, %{})
   end
 end
 
-map=%{}
-map=Middle.word_count([:one,:two,:two],map)
-IO.puts "#{inspect map}"
-map=%{}
+#map=%{}
+#map=Middle.word_count([:one,:two,:two],map)
+#IO.puts "#{inspect map}"
 map=Middle.word_count([:one,:two,:two])
 IO.puts "#{inspect map}"
 
 defmodule TreeRecurse do
-  #def print_tree(nil, indent), do: :ok
-  def print_tree({data}, indent), do: IO.puts "#{indent}#{data}"
-  def print_tree({root,{left,right}},indent) do
+  def print_tree({leaf}, indent), do: IO.puts "#{indent}#{leaf}"
+
+  def print_tree({root,{lone}},indent) do 
     IO.puts "#{indent}#{root}"
-    print_tree({left}, indent <> " ")
-    print_tree({right}, indent <> " ")
+    
+    if is_tuple(lone) do
+      print_tree(lone, indent <> " ")
+    else
+      print_tree({lone}, indent <> " ")
+    end
+  
+  end
+
+  def print_tree({root,{left,right}},indent) do
+
+    IO.puts "#{indent}#{root}"
+    
+    if is_tuple(left) do
+      print_tree(left, indent <> " ")
+    else 
+      print_tree({left}, indent <> " ")
+    end
+
+    if is_tuple(right) do
+      print_tree(right, indent <> " ")
+    else 
+      print_tree({right}, indent <> " ")
+    end
+  
   end
 
 end
 
 
-TreeRecurse.print_tree({"Hello Tree", {{"Left branch", {"Left-right child"}}, "Right branch"}}, "")
+TreeRecurse.print_tree({"See spot.", {{"See spot sit.", {"Sitting down.", {"Run spot", {"Runnn!"}}}}, "See spot run."}}, "")
+TreeRecurse.print_tree({"See spot run.", {"See spot sit", "See spot run"}}, "")
+TreeRecurse.print_tree({"Go spot!"}, "")
